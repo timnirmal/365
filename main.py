@@ -5,27 +5,84 @@ import numpy as np
 import datetime
 import random
 
-
-helicopter = {(1, 9), (12, 21), (1, 10), (14, 20), (2, 10), (2, 9), (1, 9), (0, 11), (0, 12), (1, 12), (3, 10), (5, 10), (7, 11), (12, 11), (14, 9), (16, 8), (16, 7), (14, 6), (7, 6), (5, 8), (3, 9), (2, 7), (1, 7), (0, 11), (9, 11), (9, 14), (-21, 4), (8, 14), (8, 11), (8, 14), (1, 14), (-7, -20), (9, 14), (16, 14), (9, 10), (12, 10), (14, 8), (9, 8), (9, 10), (6, 4), (15, 4), (16, 5), (15, 23), (9, 6), (9, 4), (12, 6), (12, 4)}
-ship = {(12, 0), (15, 2), (15, 6), (-15, 6), (-15, 5), (-11, 0), (12, 0), (12, 5), (-7, -20), (10, 5), (10, 3), (12, 3), (12, 5), (8, 3), (6, 3), (6, 5), (8, 5), (8, 3), (4, 3), (2, 3), (2, 5), (4, 5), (4, 3), (1, 7), (15, 23), (1, 9), (3, 9), (3, 7), (1, 7), (-10, 3), (-8, 3), (-8, 5), (-10, 5), (12, 21), (-10, 3), (-4, 9), (-4, 8), (-2, 8), (-2, 9), (-4, 9), (-6, 5), (-6, 3), (-4, 3), (-4, 5), (-6, 5), (-8, 6), (-8, 8), (-6, 8), (-6, 10), (4, 10), (8, 6), (-7, 6), (-7, 7), (-6, 7), (-6, 6), (-4, 10), (-4, 16), (1, 16), (1, 10), (-6, 10), (-11, 15), (14, 20), (-10, 14), (-14, 10), (-12, 9), (-8, 12), (0, 3), (-2, 3), (-2, 5), (-21, 4), (0, 5), (0, 3)}
-points = {(1, 7), (3, 9), (1, 9), (1, 10)}
-
-# remove common coordinated from ship without in points
-
-helicopter_clean = helicopter - ((helicopter & ship) - points)
-ship_clean = ship - ((ship & helicopter) - points)
-
-print(helicopter_clean)
+from datetime import date
+from datetime import timedelta
 
 
-helicopter_original = {(1, 9), (1, 10), (2, 10), (2, 9), (1, 9), (0, 11), (0, 12), (1, 12), (3, 10), (5, 10), (7, 11), (12, 11), (14, 9), (16, 8), (16, 7), (14, 6), (7, 6), (5, 8), (3, 9), (2, 7), (1, 7), (0, 11), (9, 11), (9, 14), (8, 14), (8, 11), (8, 14), (1, 14), (9, 14), (16, 14), (9, 10), (12, 10), (14, 8), (9, 8), (9, 10), (6, 4), (15, 4), (16, 5), (9, 6), (9, 4), (12, 6), (12, 4)}
-ship_original = {(12, 0), (15, 2), (15, 6), (-15, 6), (-15, 5), (-11, 0), (12, 0), (12, 5), (10, 5), (10, 3), (12, 3), (12, 5), (8, 3), (6, 3), (6, 5), (8, 5), (8, 3), (4, 3), (2, 3), (2, 5), (4, 5), (4, 3), (1, 7), (1, 9), (3, 9), (3, 7), (1, 7), (-10, 3), (-8, 3), (-8, 5), (-10, 5), (-10, 3), (-4, 9), (-4, 8), (-2, 8), (-2, 9), (-4, 9), (-6, 5), (-6, 3), (-4, 3), (-4, 5), (-6, 5), (-8, 6), (-8, 8), (-6, 8), (-6, 10), (4, 10), (8, 6), (-7, 6), (-7, 7), (-6, 7), (-6, 6), (-4, 10), (-4, 16), (1, 16), (1, 10), (-6, 10), (-11, 15), (-10, 14), (-14, 10), (-12, 9), (-8, 12), (0, 3), (-2, 3), (-2, 5), (0, 5), (0, 3)}
+class LibraryItem(object):
+    '''
+        Attributes
+        ----------
+        item_number: unique number of the item
+        status: available or borrowed
+        borrowing_stats: statistics about the item
+    '''
 
-# plot helicopter_original
-plt.plot(*zip(*helicopter_original), marker='o', color='r')
-plt.plot(*zip(*ship_original), marker='o', color='b')
+    def __init__(self, item_number):
+        self.item_number = item_number
+        self.status = 'available'
+        self.borrowing_stats = dict()
 
-plt.show()
+    def borrow_item(self, personal_number):
+        if self.status == 'available':
+            self.borrowing_stats[personal_number] = {'Borrowed on': date.today(),
+                                                     'Return by': date.today() + timedelta(days=30),
+                                                     'Returned on': '-'}
+            self.status = 'borrowed'
+        else:
+            print('Item is already borrowed.')
+
+    def return_item(self, personal_number):
+        pass
+
+    def get_info(self):
+        print(f'Item type: Library item\
+        \nItem number: {self.item_number}\n')
+
+        print(f'The item is currently {self.status}.\n')
+
+        for k, v in self.borrowing_stats.items():
+            print(f'Item {k} was borrowed by {v["Borrowed on"]} and should be returned by {v["Return by"]}.')
+            print(f'Item {self.item_number} was returned on {v["Returned on"]}.')
+
+            for k1,v1 in v.items():
+                print(f'{k1}: {v1}')
+
+            print('\n')
 
 
+class Book(LibraryItem):
+    '''Books in the library'''
 
+    def __init__(self, item_number, title, author, publisher):
+        super().__init__(item_number)
+        self.title = title
+        self.author = author
+        self.publisher = publisher
+
+    def get_info(self):
+        pass
+
+
+class CD(LibraryItem):
+    '''CDs in the library'''
+
+    def __init__(self, item_number, title):
+        super().__init__(item_number)
+        self.title = title
+
+    def get_info(self):
+        pass
+
+
+class Member(object):
+    pass
+
+item1 = LibraryItem(123)
+item2 = LibraryItem(124)
+book = Book(125, 'Matilda', 'Roald Dahl', 'Jonathan Cape')
+cd = CD(126, 'Matilda')
+mem = Member()
+
+
+item1.borrow_item('98-1201')
