@@ -5,64 +5,81 @@ import numpy as np
 import datetime
 import random
 
+# open text file dot-to-dot.txt as
+with open('dot-to-dot.txt', 'r') as f:
+    # read the lines of the file
+    lines = f.readlines()
+    # remove the newline character from the end of each line
+    lines = [line.rstrip('\n') for line in lines]
+    # create a list of the lines
+    lines = [line for line in lines]
+    # creat two list of x and y coordinates
+    x = []
+    y = []
+    # for each line in the list of lines
+    for line in lines:
+        # split the line into two parts
+        line = line.split(' ')
+        # append the x and y coordinates to their respective lists
+        x.append(line[0])
+        y.append(line[1])
 
-def guessing_game():
-    # randomly generate the index of the letter
-    i = random.randrange(0, len(x))
-    # a variable that keeps track of the user's attempts
-    count_attempts = 1
+    print(x)
+    print(y)
 
-    try:
-        # the first try of the user
-        user_input = int(input(f"Can you guess how many times the letter '{x[i]}'\
-                               \nhas occured in a text of {sum(y)} words?\n>>> "))
+    # plot graph from x and y
+    #plt.plot(x, y)
+    # show the graph
+    #plt.show()
 
-        # loop until the user guesses the number
-        while user_input != y[i]:
+x1 = [3, 3, 4, 6, 10, 12, 13, 13, 12, 10, 6, 4, 3, 2, 2, 0, 0, 2, 2, 2, 0, 0, 2, 3, 2, 1, 1, 2, 3, 3, 5, 4, 3, 3, 4, 5,
+      5, 6, 6, 7, 7, 6, 9, 9, 10, 10, 9, 11, 12, 13, 13, 12, 11, 11, 13, 14, 15, 15, 14, 13, 13, 4, 5, 5, 4, 3, 3, 4,
+      12, 13, 13, 12, 11, 11, 12, 9, 10, 10, 9, 9, 2, 1, 1, 2, 3, 3, 2, 7, 6, 6, 7, 7, 16, 16, 14, 14, 16, 13, 13, 14,
+      15, 15, 14, 13, 14, 14, 16, 16, 14]
+y1 = [6, 10, 12, 13, 13, 12, 10, 6, 4, 3, 3, 4, 6, 10, 9, 9, 10, 10, 7, 6, 6, 7, 7, 11, 11, 12, 13, 13, 12, 11, 14, 15,
+      15, 14, 13, 13, 14, 14, 16, 16, 14, 14, 14, 16, 16, 14, 14, 13, 13, 14, 15, 15, 14, 13, 11, 11, 12, 13, 13, 12,
+      11, 3, 3, 2, 1, 1, 2, 3, 3, 2, 1, 1, 2, 3, 3, 2, 2, 0, 0, 2, 5, 4, 3, 3, 4, 5, 5, 2, 2, 0, 0, 2, 7, 6, 6, 7, 7, 4,
+      5, 5, 4, 3, 3, 4, 9, 10, 10, 9, 9]
 
-            if y[i] + round(y[i] * 0.1) >= user_input > y[i]:
-                user_input = int(input(''' (1) '''))
-                count_attempts += 1
+x2 = [0, 0, 7, 8, 15, 15, 13, 8, 7, 2, 0, 1, 1, 14, 14, 5, 5, 10, 10, 11, 11, 13, 13]
+y2 = [7, 9, 16, 16, 9, 7, 7, 13, 13, 7, 7, 7, 0, 0, 7, 0, 6, 6, 0, 13, 15, 15, 11]
 
-            elif y[i] - round(y[i] * 0.1) <= user_input < y[i]:
-                user_input = int(input(''' (2) '''))
-                count_attempts += 1
+x3 = [1, 1, 0, 0, 3, 9, 12, 15, 16, 16, 15, 15, 13, 11, 9, 9, 7, 7, 5, 3, 1, 1, 3, 5, 5, 1, 6, 6, 11, 9, 6, 2, 3, 5, 6,
+      6, 5, 3, 2, 2, 14, 13, 11, 10, 10, 11, 13, 14, 14, 11, 11, 13, 13, 11, 5, 5, 3, 3, 5]
+y3 = [5, 4, 4, 9, 12, 12, 8, 8, 7, 4, 4, 5, 7, 7, 5, 4, 4, 5, 7, 7, 5, 8, 11, 11, 8, 8, 11, 8, 8, 11, 11, 5, 6, 6, 5, 3,
+      2, 2, 3, 5, 5, 6, 6, 5, 3, 2, 2, 3, 5, 5, 3, 3, 5, 5, 5, 3, 3, 5, 5]
 
-            elif user_input > y[i]:
-                user_input = int(input(''' (3) '''))
-                count_attempts += 1
+# shift y1 in the y direction by 30
+y1 = [y + 30 for y in y1]
+# shift x3 in the x direction by 25
+x3 = [x + 25 for x in x3]
+# shift y3 in the y direction by -2
+y3 = [y - 2 for y in y3]
 
-            else:
-                user_input = int(input(''' (4) '''))
-                count_attempts += 1
+# plot 3 set of points
+#plt.plot(x1, y1, 'ro')
+#plt.plot(x2, y2, 'bo')
+#plt.plot(x3, y3, 'go')
 
-        string = ''
-        if count_attempts == 1:
-            string = 'try'
-        else:
-            string = 'tries'
+#plt.show()
 
-        print(f"\nCongratulations! You guessed it in {count_attempts} {string}!\
-                  \nThe letter '{x[i]}' has occured {y[i]} times in a text of\
-                  \n{sum(y)} words.")
-
-    except ValueError:
-        print("Please, enter only integers.")
+# create and open file named coordinates1.txt
+f1 = open('coordinates1.txt', 'w')
+# write the x and y coordinates to the file
+for i in range(len(x1)):
+    f1.write(str(x1[i]) + ' ' + str(y1[i]) + '\n')
+    # close the file
+f1.close()
 
 
-# main function
+helicopter = {(1, 9), (12, 21), (1, 10), (14, 20), (2, 10), (2, 9), (1, 9), (0, 11), (0, 12), (1, 12), (3, 10), (5, 10), (7, 11), (12, 11), (14, 9), (16, 8), (16, 7), (14, 6), (7, 6), (5, 8), (3, 9), (2, 7), (1, 7), (0, 11), (9, 11), (9, 14), (-21, 4), (8, 14), (8, 11), (8, 14), (1, 14), (-7, -20), (9, 14), (16, 14), (9, 10), (12, 10), (14, 8), (9, 8), (9, 10), (6, 4), (15, 4), (16, 5), (15, 23), (9, 6), (9, 4), (12, 6), (12, 4)}
+ship = {(12, 0), (15, 2), (15, 6), (-15, 6), (-15, 5), (-11, 0), (12, 0), (12, 5), (-7, -20), (10, 5), (10, 3), (12, 3), (12, 5), (8, 3), (6, 3), (6, 5), (8, 5), (8, 3), (4, 3), (2, 3), (2, 5), (4, 5), (4, 3), (1, 7), (15, 23), (1, 9), (3, 9), (3, 7), (1, 7), (-10, 3), (-8, 3), (-8, 5), (-10, 5), (12, 21), (-10, 3), (-4, 9), (-4, 8), (-2, 8), (-2, 9), (-4, 9), (-6, 5), (-6, 3), (-4, 3), (-4, 5), (-6, 5), (-8, 6), (-8, 8), (-6, 8), (-6, 10), (4, 10), (8, 6), (-7, 6), (-7, 7), (-6, 7), (-6, 6), (-4, 10), (-4, 16), (1, 16), (1, 10), (-6, 10), (-11, 15), (14, 20), (-10, 14), (-14, 10), (-12, 9), (-8, 12), (0, 3), (-2, 3), (-2, 5), (-21, 4), (0, 5), (0, 3)}
+points = {(1, 7), (3, 9), (1, 9), (1, 10)}
 
-text = "sojdisodsdkjd"
+helicopter_original = {(1, 9), (1, 10), (2, 10), (2, 9), (1, 9), (0, 11), (0, 12), (1, 12), (3, 10), (5, 10), (7, 11), (12, 11), (14, 9), (16, 8), (16, 7), (14, 6), (7, 6), (5, 8), (3, 9), (2, 7), (1, 7), (0, 11), (9, 11), (9, 14), (8, 14), (8, 11), (8, 14), (1, 14), (9, 14), (16, 14), (9, 10), (12, 10), (14, 8), (9, 8), (9, 10), (6, 4), (15, 4), (16, 5), (9, 6), (9, 4), (12, 6), (12, 4)}
+ship_original = {(12, 0), (15, 2), (15, 6), (-15, 6), (-15, 5), (-11, 0), (12, 0), (12, 5), (10, 5), (10, 3), (12, 3), (12, 5), (8, 3), (6, 3), (6, 5), (8, 5), (8, 3), (4, 3), (2, 3), (2, 5), (4, 5), (4, 3), (1, 7), (1, 9), (3, 9), (3, 7), (1, 7), (-10, 3), (-8, 3), (-8, 5), (-10, 5), (-10, 3), (-4, 9), (-4, 8), (-2, 8), (-2, 9), (-4, 9), (-6, 5), (-6, 3), (-4, 3), (-4, 5), (-6, 5), (-8, 6), (-8, 8), (-6, 8), (-6, 10), (4, 10), (8, 6), (-7, 6), (-7, 7), (-6, 7), (-6, 6), (-4, 10), (-4, 16), (1, 16), (1, 10), (-6, 10), (-11, 15), (-10, 14), (-14, 10), (-12, 9), (-8, 12), (0, 3), (-2, 3), (-2, 5), (0, 5), (0, 3)}
 
-dictonary = dict(Counter(text))
+# plot helicopter_original
 
-dictonary = {k: v for k, v in dictonary.items() if k.isalpha()}
 
-print(dictonary)
 
-# dictonary to x and y using zip
-
-x, y = zip(*dictonary.items())
-
-print(type(x))
-print(type(y))
