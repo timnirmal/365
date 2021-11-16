@@ -1,13 +1,5 @@
-from collections import Counter
-
-import matplotlib.pyplot as plt
 import numpy as np
-import datetime
-import random
 import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
 
-
-
-hari = "s"
-
-print('adsad'+5)
