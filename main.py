@@ -3,39 +3,30 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 
-sns.set()
+# get data in Real_estate_data.csv
+df = pd.read_csv("Numpy/Real_estate(cleaned).csv")
 
-#df_used_cars = pd.read_csv("Visualization\\bar_chart_data.csv")
-df_bar = pd.read_csv("Visualization\\pie_chart.csv")
+# find mean of numerical columns
+temp_mean = np.mean(df, axis=0)
 
-# show the data
-print(df_bar)
+# count numberical columns
+#num_cols = df.argwhere(np.isnan(temp_mean)==False).squeeze()
 
-# Set figure size
-plt.figure(figsize=(9, 6))
-plt.title("Used Cars", fontsize=20, fontweight='bold')
-# Overlapping Labels
-plt.xticks(rotation=45, fontsize=12)
+#a = np.getfromtxt("Numpy/Real_estate(cleaned).csv", delimiter=',', skip_header=1, usecols=num_cols,skip_footer=df.shape[0]-1)
+# print
+print(temp_mean)
 
-# Bar chart
-# plt.bar(df_used_cars["Brand"], df_used_cars["Cars Listings"])
-plt.bar(df_bar["Cities"], df_bar["Sales"])
+# sixth column smallest value of df
+print(df.iloc[:,5].min())
 
-# pie chart
-# Cities,Sales,Cumulative Frequency on pie_chart.csv
-#plt.pie(df_used_cars["Cities"], labels=df_used_cars["Sales"], autopct='%1.1f%%')
-# plt.pie(df_used_cars["Cars Listings"], labels=df_used_cars["Brand"], autopct='%1.1f%%')
+# last column largest value
+print(df.iloc[:,df.shape[1]-1].max())
 
-# Area chart - Stack plot
-# plt.stackplot(df_used_cars["Brand"], df_used_cars["Cars Listings"], labels=df_used_cars["Brand"], colors=['#0066ff', '#ff6600', '#00ff00'])
+# distribute into 5 bins according to area
+df['area'] = pd.cut(df['area'], 5)
 
-# Convert Date to datetime -  This will help to use correct data format
-# df_used_cars["Date"] = pd.to_datetime(df_used_cars["Date"])
+print(df['area'])
 
-plt.show()
-# plt.savefig("Visualization\\bar_chart.png")
+# count values in each range
+print(df['area'].value_counts())
 
-
-# ggplot layers
-# data
-# aesthetic
