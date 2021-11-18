@@ -3,30 +3,28 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# get data in Real_estate_data.csv
-df = pd.read_csv("Numpy/Real_estate(cleaned).csv")
+# Pandas
+df = pd.read_csv('data/data.csv')
 
-# find mean of numerical columns
-temp_mean = np.mean(df, axis=0)
+start_date_deposit = pd.Series(
+    {
+        "01/01/2019": 2000,
+        "02/01/2019": 2000,
+        "03/01/2019": 2000,
+        "04/01/2019": 2000,
+    }
+)
 
-# count numberical columns
-#num_cols = df.argwhere(np.isnan(temp_mean)==False).squeeze()
+# sum of smallest and largest values in a series using implicit index
+print(start_date_deposit.nsmallest(2).sum())
 
-#a = np.getfromtxt("Numpy/Real_estate(cleaned).csv", delimiter=',', skip_header=1, usecols=num_cols,skip_footer=df.shape[0]-1)
-# print
-print(temp_mean)
+df = pd.DataFrame(nparray, columns=['date', 'amount'])
 
-# sixth column smallest value of df
-print(df.iloc[:,5].min())
+# typeof data frame
+print(type(df))
 
-# last column largest value
-print(df.iloc[:,df.shape[1]-1].max())
+# sql
 
-# distribute into 5 bins according to area
-df['area'] = pd.cut(df['area'], 5)
+# number of missing album names in album table sql
 
-print(df['area'])
-
-# count values in each range
-print(df['area'].value_counts())
-
+SELECT SUM(CASE WHEN album_name IS NULL THEN 1 ELSE 0 END)
